@@ -1,0 +1,14 @@
+[
+    {
+        "status": 400,
+        "message": "Note ID must be a valid ID"
+    },
+    {
+        "status": 400,
+        "message": "Note ID must be a valid ID"
+    },
+    {
+        "status": 200,
+        "message": "Note successfully retrieved"
+    }
+]

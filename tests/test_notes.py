@@ -1,11 +1,11 @@
 import pytest
-import json
+import tests.test_functionCollection as test
 
-with open("params/response/createRes.json", "r") as createRes_file:
-    expected_createResponses = json.load(createRes_file)
-
-with open("params/response/getRes.json", "r") as getRes_file:
-    expected_getResponses = json.load(getRes_file)
+expected_createResponses = test.load_expected_responses("create")
+expected_getResponses = test.load_expected_responses("get")
+expected_getbyidResponses = test.load_expected_responses("getbyid")
+expected_updateResponses = test.load_expected_responses("update")
+expected_updateStatusResponses = test.load_expected_responses("updateStatus")
 
 @pytest.mark.smoke
 def test_createNote(createNote):
@@ -18,9 +18,36 @@ def test_createNote(createNote):
 
 @pytest.mark.smoke
 def test_getNote(getNote):
-    responseStatus, responseMessage = getNote
+    responseStatus, responseMessage, response = getNote
     expected_response = expected_getResponses
     assert responseStatus == expected_response["status"]       
     assert responseMessage in expected_response["message"]
     print("get all notes passed !!")
+
+@pytest.mark.smoke
+def test_getNotebyid(getNotebyid):
+    responseStatus, responseMessage = getNotebyid
+    for i, (actual_status, actual_message) in enumerate(zip(responseStatus, responseMessage)):
+        expected_response = expected_getbyidResponses[i]
+        assert actual_status == expected_response["status"]       
+        assert actual_message == expected_response["message"]
+    print("get note by id passed !!")
+
+@pytest.mark.regression
+def test_updateNote(updateNote):
+    responseStatus, responseMessage = updateNote
+    for i, (actual_status, actual_message) in enumerate(zip(responseStatus, responseMessage)):
+        expected_response = expected_updateResponses[i]
+        assert actual_status == expected_response["status"]      
+        assert actual_message == expected_response["message"]
+    print("update note passed !!")
+
+@pytest.mark.regression
+def test_updateStatus(updateStatus):
+    responseStatus, responseMessage = updateStatus
+    for i, (actual_status, actual_message) in enumerate(zip(responseStatus, responseMessage)):
+        expected_response = expected_updateStatusResponses[i]
+        assert actual_status == expected_response["status"]      
+        assert actual_message == expected_response["message"]
+    print("update status passed !!")
 
