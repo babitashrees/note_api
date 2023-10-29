@@ -4,15 +4,11 @@
         "message": "Note ID must be a valid ID"
     },
     {
-        "status": 400,
-        "message": "Note ID must be a valid ID"
-    },
-    {
         "status": 404,
         "message": "No note was found with the provided ID, Maybe it was deleted"
     },
     {
         "status": 200,
-        "message": "Note successfully retrieved"
+        "message": "Note successfully deleted"
     }
 ]
